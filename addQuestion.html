@@ -17,11 +17,34 @@
 	<script> 
 		$(document).ready(function(){
 			
-			$("#bttn").click(function(){
-			
-			
-			
-			
+			$("form").submit(function(e){
+				var email = new RegExp('^([a-z]+)([0-9]{3})@ikasle\.ehu\.eus$');
+				var zailtasuna = new RegExp('^[0-5]$');
+				var galdera = new RegExp('^.{10,}\\?$');
+				
+				var Val = $("#mail").val();
+				if (email.test(Val))
+				{
+					Val = $("#q").val();
+					if (galdera.test(Val))
+					{
+						Val = $("#dif").val();
+						if (!zailtasuna.test(Val))
+						{
+							alert('Invalid difficulty number: choose from 0 to 5');
+							e.preventDefault();
+						}
+						
+					}
+					else{
+					alert('Invalid question: must be at least 10 characters and end in "?" ');
+					e.preventDefault();
+					}
+					
+				} else {
+				alert(Val);
+				e.preventDefault();
+				}
 			
 			});
 			
@@ -48,33 +71,33 @@
 	
 		<form id="galderenF" name="galderenF" action="proba.php" >
 	
-			Submitter Email: <br>
-			<input name="mail" type="text"></input> <br>
+			Submitter Email:(*) <br>
+			<input name="mail" id="mail" type="text" required></input> <br>
 		
-			Question: <br>
-			<input name="q" type="text"></input> <br>
+			Question:(*) <br>
+			<input name="q" id="q" type="text" required></input> <br>
 			
-			Right Answer: <br>
-			<input name="respRight" type="text"></input> <br>
+			Right Answer:(*) <br>
+			<input name="respRight" type="text" required></input> <br>
 			
-			Wrong Answer 1: <br>
-			<input name="respWr1" type="text"></input> <br>
+			Wrong Answer 1:(*) <br>
+			<input name="respWr1" type="text" required></input> <br>
 		
-			Wrong Answer 2: <br>
-			<input name="respWr2" type="text"></input> <br>
+			Wrong Answer 2:(*) <br>
+			<input name="respWr2" type="text" required></input> <br>
 			
-			Wrong Answer 3: <br>
-			<input name="respWr3" type="text"></input> <br>
+			Wrong Answer 3:(*) <br>
+			<input name="respWr3" type="text" required></input> <br>
 		
-			Difficulty: <br>
-			<input name="dif" type="number"></input> <br>
+			Difficulty:(*) <br>
+			<input name="dif" id="dif" type="number" required></input> <br>
 			
-			Subject: <br>
-			<input name="subj" type="text"></input> <br>
+			Subject:(*) <br>
+			<input name="subj" type="text" required></input> <br>
 			
-			
+			(Fields marked as (*) are mandatory) <br>
 	
-			<input type="submit" id="bttn"></input> <br>
+			<input type="submit" id="bttn"></input> <input type="reset" id="rstbttn"></input> <br>
 		
 	</form>
     </section>
