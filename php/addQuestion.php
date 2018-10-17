@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$ema = mysqli_query($db,$sql);
 			if (!$ema){echo "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!<br>
 	gO BAWCK YOU FUCKO plz <a href='../addQuestion.html'>Twy again, pwease... (´w`U).</a>";} else {
-			echo "Your question has been added correctly!<a href='../addQuestion.html'>Click here to add another one?</a> Or maybe you'd like to consult the existing questions?";
+			echo "Your question has been added correctly!<a href='../addQuestion.html'>Click here to add another one?</a> <a href='.\ShowQuestions.php'> Or maybe you'd like to consult the existing questions?</a>";
 			}
 		}
 		exit;
