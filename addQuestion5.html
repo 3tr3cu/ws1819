@@ -21,41 +21,31 @@
 				var email = new RegExp('^([a-z]+)([0-9]{3})@ikasle\\.ehu\\.eus$');
 				var zailtasuna = new RegExp('^[0-5]$');
 				var galdera = new RegExp('^\\S.{9,}$');
-				var notEmpty = new RegExp('^\\S.*$');
 				
-
-				var allfull = true;
-				if (notEmpty.test($("#rr").val())  && notEmpty.test($("#wr1").val()) && notEmpty.test($("#wr2").val()) && notEmpty.test($("#wr3").val()) && notEmpty.test($("#subj").val())){
-		
-				
-				}else{ allfull = false;}
-				
-				if (allfull) {
-					var Val = $("#mail").val();
-					if (email.test(Val))
+				var Val = $("#mail").val();
+				if (email.test(Val))
+				{
+					Val = $("#q").val();
+					if (galdera.test(Val))
 					{
-						Val = $("#q").val();
-						if (galdera.test(Val))
+						Val = $("#dif").val();
+						if (!zailtasuna.test(Val))
 						{
-							Val = $("#dif").val();
-							if (!zailtasuna.test(Val))
-							{
-								alert('Invalid difficulty number: choose from 0 to 5');
-								e.preventDefault();
-							}
-							
+							alert('Invalid difficulty number: choose from 0 to 5');
+							e.preventDefault();
 						}
-						else{
-						alert('Invalid question: must be at least 10 characters');
-						e.preventDefault();
-						}
-					
-					} else {
-					alert("Enter a valid ikasle.ehu.eus domain email");
+						
+					}
+					else{
+					alert('Invalid question: must be at least 10 characters');
 					e.preventDefault();
+					}
+					
+				} else {
+				alert("Enter a valid ikasle.ehu.eus domain email");
+				e.preventDefault();
 				}
-				}else {alert("Please, fill all fields");
-					e.preventDefault();}
+			
 			});
 			
 		
@@ -83,28 +73,28 @@
 		<form id="galderenF" name="galderenF" action="http:\\localhost\project\php\addQuestion.php" method="post">
 	
 			Submitter Email:(*) <br>
-			<input name="mail" id="mail" type="text" ></input> <br>
+			<input name="mail" id="mail" type="text" required></input> <br>
 		
 			Question:(*) <br>
-			<input name="q" id="q" type="text" ></input> <br>
+			<input name="q" id="q" type="text" required></input> <br>
 			
 			Right Answer:(*) <br>
-			<input name="respRight" id="rr" type="text" ></input> <br>
+			<input name="respRight" type="text" required></input> <br>
 			
 			Wrong Answer 1:(*) <br>
-			<input name="respWr1" id="wr1" type="text" ></input> <br>
+			<input name="respWr1" type="text" required></input> <br>
 		
 			Wrong Answer 2:(*) <br>
-			<input name="respWr2" id="wr2" type="text" ></input> <br>
+			<input name="respWr2" type="text" required></input> <br>
 			
 			Wrong Answer 3:(*) <br>
-			<input name="respWr3" id="wr3" type="text" ></input> <br>
+			<input name="respWr3" type="text" required></input> <br>
 		
 			Difficulty:(*) <br>
-			<input name="dif" id="dif" type="number" ></input> <br>
+			<input name="dif" id="dif" type="number" required></input> <br>
 			
 			Subject:(*) <br>
-			<input name="subj" id="subj" type="text" ></input> <br>
+			<input name="subj" type="text" required></input> <br>
 			
 			(Fields marked as (*) are mandatory) <br>
 	
