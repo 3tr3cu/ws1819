@@ -1,9 +1,6 @@
 <!DOCTYPE HTML>
 <HTML>
-<head> <title>Add Questions</title> </head>
-<!DOCTYPE html>
-<html>
-  <head>
+<head> <title>Add Questions</title> 
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
 	<title>Add a question</title>
     <link rel='stylesheet' type='text/css' href='../styles/style.css' />
@@ -15,6 +12,7 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../styles/smartphone.css' />
+		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}</style>
 		   
 	<script src='../js/jquery-3.2.1.js'></script>
 	<script> 
@@ -58,20 +56,59 @@
 	
   </head>
   <body>
+      
+              <?php
+              
+              function login()
+{
+	if(empty($_GET['mail']))
+	{
+
+		return false;
+	}
+	if(empty($_GET['pass']))
+	{
+
+		return false;
+	}
+	
+	return true;
+		
+}  
+              
+              
+              if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            	if (login()){ 
+	                
+                	}else {exit("Not authorized.");}
+            
+        } else {exit("Not authorized.");}
+	
+	?>
+      
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      <span class="right"><a href="../login">LogIn</a> </span>
-      <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
+      You are currently logged in. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>
 	<h2>Add a Question</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='../layout.html'>Home</a></span>
+		<span><a href='./layout.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='../credits.html'>Credits</a></span>
-		<span><a href='.\addQuestion.php'>Add a question</a></span>
-		<span><a href='.\ShowQuestions.php'>See the questions</a></span>
+		<span><a href='./credits.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Credits</a></span>
+		<span><a href='.\addQuestion.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Add a question</a></span>
+		<span><a href='.\ShowQuestions.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>See the questions</a></span>
 	</nav>
     <section class="main" id="s1">
+        
+
 	
 		<form id="galderenF" name="galderenF" method="post">
 	
