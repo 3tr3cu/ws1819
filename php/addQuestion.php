@@ -77,12 +77,11 @@
 }  
               
               
-              if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
             	if (login()){ 
 	                
                 	}else {exit("Not authorized.");}
             
-        } else {exit("Not authorized.");}
 	
 	?>
       
@@ -189,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$sql = "INSERT INTO questions (mail, q, respRight, respWr1, respWr2, respWr3, dif,  subj) VALUES ('$varMail', '$varQ', '$varRight', '$varWr1', '$varWr2', '$varWr3', '$varDif', '$varSub')";
 			$ema = mysqli_query($db,$sql);
 			if (!$ema){echo "There has been an error trying to insert. Try again, please.";} else {
-			echo "Your question has been added correctly! Feel free to add another one, <a href='.\ShowQuestions.php'> or maybe you'd like to consult the existing questions?</a>";
+			echo "Your question has been added correctly! Feel free to add another one";
 			}
 		}
 mysqli_close($db);} }
