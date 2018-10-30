@@ -128,9 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					if(preg_match('/^\\S.*$/',$varRight)){
 						if(preg_match('/^\\S.*$/',$varWr1)){
 							if(preg_match('/^\\S.*$/',$varWr2)){
-								if(preg_match('/^\\S.*$/',%varWr3)){
+								if(preg_match('/^\\S.*$/',$varWr3)){
 									if(preg_match('/^\\S.*$/',$varSub)){
-										%validData=true;
+										$validData=true;
 									}
 								}
 							}
