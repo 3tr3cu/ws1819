@@ -19,7 +19,8 @@
 		$(document).ready(function(){
 			
 			$("form").submit(function(e){
-				var email = new RegExp('^([a-z]+)([0-9]{3})@ikasle\\.ehu\\.eus$');
+			    
+			    var email = new RegExp('^([a-z]+)([0-9]{3})@ikasle\\.ehu\\.eus$');
 				var zailtasuna = new RegExp('^[0-5]$');
 				var galdera = new RegExp('^\\S.{9,}$');
 				
@@ -46,7 +47,6 @@
 				alert("Enter a valid ikasle.ehu.eus domain email");
 				e.preventDefault();
 				}
-			
 			});
 			
 		
@@ -82,6 +82,7 @@
 	                
                 	}else {exit("Not authorized.");}
             
+
 	
 	?>
       
@@ -91,25 +92,27 @@
 	<h2>Add a Question</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='./layout.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+		<span><a href='./layout.php<?php 
             if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Home</a></span>
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='./credits.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+		<span><a href='./credits.php<?php
             if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Credits</a></span>
-		<span><a href='.\addQuestion.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Credits</a></span>
+		<span><a href='.\addQuestion.php<?php
             if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Add a question</a></span>
-		<span><a href='.\ShowQuestions.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Add a question</a></span>
+		<span><a href='.\ShowQuestions.php<?php
             if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>See the questions</a></span>
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions</a></span>
 	</nav>
     <section class="main" id="s1">
         
 
 	
-		<form id="galderenF" name="galderenF" method="post">
+		<form id="galderenF" name="galderenF" method="post" action=".\addQuestion.php<?php 
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>">
 	
 			Submitter Email:(*) <br>
 			<input name="mail" id="mail" type="text" required></input> <br>
@@ -188,7 +191,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$sql = "INSERT INTO questions (mail, q, respRight, respWr1, respWr2, respWr3, dif,  subj) VALUES ('$varMail', '$varQ', '$varRight', '$varWr1', '$varWr2', '$varWr3', '$varDif', '$varSub')";
 			$ema = mysqli_query($db,$sql);
 			if (!$ema){echo "There has been an error trying to insert. Try again, please.";} else {
-			echo "Your question has been added correctly! Feel free to add another one";
+			echo "Your question has been added correctly! Feel free to add another one.";
+						
+			$xml = simplexml_load_file('../xml/questions.xml');
+			$assessmentItem = $xml->addChild('assessmentItem');
+			
+			$assessmentItem->addAttribute('author',$varMail);
+			$assessmentItem->addAttribute('subject',$varSub);
+			$itemBody = $assessmentItem->addChild('itemBody');
+			$p = $itemBody->addChild('p', $varQ);
+			$correctResponse = $assessmentItem->addChild('correctResponse');
+			$value = $correctResponse->addChild('value',$varRight);
+			$incorrectResponses = $assessmentItem->addChild('incorrectResponses');
+			$value = $incorrectResponses->addChild('value',$varWr1);
+			$value = $incorrectResponses->addChild('value',$varWr2);
+			$value = $incorrectResponses->addChild('value',$varWr3);
+			$xml->asXML('../xml/questions.xml');
+
 			}
 		}
 mysqli_close($db);} }
