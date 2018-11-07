@@ -15,7 +15,6 @@
 		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}</style>
 		   
 	<script src='../js/jquery-3.2.1.js'></script>
-
 	
   </head>
   <body>
@@ -51,7 +50,7 @@
       
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-     You are currently logged in, <?php echo $_GET['mail'];?>. <span class='right'><a href='.\logOut.php'>Log Out</a></span>
+      You are currently logged in, <?php echo $_GET['mail'];?>. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>
 	<h2>Questions in the database</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
@@ -68,9 +67,9 @@
 		<span><a href='.\ShowQuestions.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
             if (login()){ $usr = trim($_GET['mail']);
 		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>See the questions (php)</a></span>
-		<span><a href='.\showXMLQuestions.php<?php
+		<span><a href='.\showXMLQuestions.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
             if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions (xml)</a></span>
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>See the questions (xml)</a></span>
 	</nav>
     <section class="main" id="s1">
         
@@ -80,46 +79,36 @@
 	
 <?php  
   
-  include 'dbConfig.php';
-$db = mysqli_connect($zerbitzaria, $erabiltzailea, $gakoa, $db);
+$xml = simplexml_load_file("../xml/questions.xml");
 
 
-if(!$db)  { echo "Database couldn't be connected<br>
-Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";} 
 
-else{ $result = mysqli_query($db,"SELECT * FROM questions "); 
+if(!$xml)  { echo "No xml file was found<br>
+Try again by refreshing, or <a href='./layout.php'> go back, please.</a>";} 
+
+else{ if(empty($xml->children())) {
   
-  if (mysqli_num_rows($result) == 0){echo "There is no information to display.";}
+ echo "There is no information to display.";}
   else{ echo "<table border='1'>
 <tr>
 <th>Mail</th>
 <th>Question</th>
 <th>Right answer</th>
-<th>Wrong answer 1</th>
-<th>Wrong answer 2</th>
-<th>Wrong answer 3</th>
-<th>Difficulty</th>
-<th>Subject</th>
 
 </tr>";
 
-while($row = mysqli_fetch_array($result))
-  {
+foreach ($xml->children() as $ai){
+
   echo "<tr>";
-  echo "<td>" . $row['mail'] . "</td>";
-  echo "<td>" . $row['q'] . "</td>";
-  echo "<td>" . $row['respRight'] . "</td>";
-  echo "<td>" . $row['respWr1'] . "</td>";
-  echo "<td>" . $row['respWr2'] . "</td>";
-  echo "<td>" . $row['respWr3'] . "</td>";
-  echo "<td>" . $row['dif'] . "</td>";
-   echo "<td>" . $row['subj'] . "</td>";
+  echo "<td>" . $ai['author'] . "</td>";
+  echo "<td>" . $ai->itemBody->p . "</td>";
+  echo "<td>" . $ai->correctResponse->value . "</td>";
   echo "</tr>";
   }
 echo "</table>";
 
   }
-mysqli_close($db);}
+}
   ?>
     </section>
 	

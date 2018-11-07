@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="./showXMLQuestions.xsl"?>
 <assessmentItems>
 	<assessmentItem author="rosa001@ikasle.ehu.eus" subject="mikologia">
 		<itemBody> 
@@ -39,4 +40,4 @@
 			<value>Errotariak</value>
 		</incorrectResponses>
 	</assessmentItem>
-<assessmentItem author="joode342@ikasle.ehu.eus" subject="THE TRUTH IS OUT THERE"><itemBody><p>Aliens are real</p></itemBody><correctResponse><value>Of course</value></correctResponse><incorrectResponses><value>Thats not a question</value><value>No you dweeb</value><value>Honk</value></incorrectResponses></assessmentItem><assessmentItem author="matsudakun546@ikasle.ehu.eus" subject="alkfj"><itemBody><p>adsflkjasa</p></itemBody><correctResponse><value>kljfkl</value></correctResponse><incorrectResponses><value>jdklj</value><value>kjfa</value><value>dsafkl</value></incorrectResponses></assessmentItem><assessmentItem author="testeruser001@ikasle.ehu.eus" subject="Testing"><itemBody><p>Teeeeeest?</p></itemBody><correctResponse><value>Yeah</value></correctResponse><incorrectResponses><value>No</value><value>Nope</value><value>Sorry, no</value></incorrectResponses></assessmentItem></assessmentItems>
+<assessmentItem author="joode342@ikasle.ehu.eus" subject="THE TRUTH IS OUT THERE"><itemBody><p>Aliens are real</p></itemBody><correctResponse><value>Of course</value></correctResponse><incorrectResponses><value>Thats not a question</value><value>No you dweeb</value><value>Honk</value></incorrectResponses></assessmentItem><assessmentItem author="matsudakun546@ikasle.ehu.eus" subject="alkfj"><itemBody><p>adsflkjasa</p></itemBody><correctResponse><value>kljfkl</value></correctResponse><incorrectResponses><value>jdklj</value><value>kjfa</value><value>dsafkl</value></incorrectResponses></assessmentItem></assessmentItems>

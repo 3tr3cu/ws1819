@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Logout</title>
+	<title>Log out</title>
     <link rel='stylesheet' type='text/css' href='../styles/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 

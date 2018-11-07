@@ -37,7 +37,9 @@
 
 	          if( $_SERVER['REQUEST_METHOD'] == 'GET'){
                 if (login()){
-                echo "You are currently logged in. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>";
+                                    	$usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']);
+                echo "You are currently logged in, $usr. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>";
                  } else { echo '<span class="right"><a href=".\login.php">Log In</a> </span><span class="right"><a href=".\signUp.php">Sign up</a> </span>'; }
 	          }else { echo '<span class="right"><a href=".\login.php">Log In</a> </span><span class="right"><a href=".\signUp.php">Sign up</a> </span>'; }
         ?>
@@ -59,8 +61,9 @@
                 
                 	$usr = trim($_GET['mail']);
 		$pass = trim($_GET['pass']);
-                echo "		<span><a href='.\addQuestion.php?mail=$usr&pass=$pass'>Add a question</a></span>
-		<span><a href='.\ShowQuestions.php?mail=$usr&pass=$pass'>See the questions</a></span>";
+                echo "<span><a href='.\addQuestion.php?mail=$usr&pass=$pass'>Add a question</a></span>
+		<span><a href='.\ShowQuestions.php?mail=$usr&pass=$pass'>See the questions (php)</a></span>
+		<span><a href='.\showXMLQuestions.php?mail=$usr&pass=$pass'>See the questions (xml)</a></span>";
             }
         }
         

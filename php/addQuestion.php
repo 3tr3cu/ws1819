@@ -88,7 +88,7 @@
       
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      You are currently logged in. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>
+          You are currently logged in, <?php echo $_GET['mail'];?>. <span class='right'><a href='.\logOut.php'>Log Out</a></span>
 	<h2>Add a Question</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
@@ -104,7 +104,11 @@
 		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Add a question</a></span>
 		<span><a href='.\ShowQuestions.php<?php
             if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions</a></span>
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions (php)</a></span>
+		<span><a href='.\showXMLQuestions.php<?php
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions (xml)</a></span>
+		
 	</nav>
     <section class="main" id="s1">
         
@@ -207,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$value = $incorrectResponses->addChild('value',$varWr2);
 			$value = $incorrectResponses->addChild('value',$varWr3);
 			$xml->asXML('../xml/questions.xml');
-
+            echo "Check the existing questions: <a href='.\ShowQuestions.php?mail=$usr&pass=$pass'>(php)</a> <a href='.\showXMLQuestions.php?mail=$usr&pass=$pass'> (xml)</a>";
 			}
 		}
 mysqli_close($db);} }
