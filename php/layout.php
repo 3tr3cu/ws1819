@@ -63,7 +63,7 @@
 		$pass = trim($_GET['pass']);
                 echo "<span><a href='.\addQuestion.php?mail=$usr&pass=$pass'>Add a question</a></span>
 		<span><a href='.\ShowQuestions.php?mail=$usr&pass=$pass'>See the questions (php)</a></span>
-		<span><a href='.\showXMLQuestions.php?mail=$usr&pass=$pass'>See the questions (xml)</a></span>";
+		<span><a href='.\showXMLQuestions.php?mail=$usr&pass=$pass'>See the questions (xml)</a></span><span><a href='.\handlingQuizesAJAX.php?mail=$usr&pass=$pass'>Manage Quizzes (AJAX)</a></span>";
             }
         }
         

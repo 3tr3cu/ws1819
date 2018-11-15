@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <HTML>
-<head> <title>Logout</title> </head>
+<head> <title>Log out</title> </head>
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Log out</title>
+	<title>Logout</title>
     <link rel='stylesheet' type='text/css' href='../styles/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -38,7 +38,13 @@
 	
 	<h1 >You have successfully logged out</h1>
 	<?php 
-
+    	$xml = simplexml_load_file('../xml/counter.xml');
+				    	$count = $xml->count;
+				    	$count= intval($count);
+				    	$count= $count -1;
+				    	$xml= "<counts><count>".$count."</count></counts>";
+				    	$xml = new SimpleXMLElement($xml);
+				    	$xml->asXML('../xml/counter.xml');
 ?>
     </section>
 	

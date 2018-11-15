@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <HTML>
-<head> <title>Add Questions</title> 
+<head> <title>Show Questions</title> 
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Show Questions</title>
+	<title>Add a question</title>
     <link rel='stylesheet' type='text/css' href='../styles/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -12,7 +12,8 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../styles/smartphone.css' />
-		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}</style>
+		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
+		   .table-wrapper{float: left; width: 90%; height: 650px; overflow: auto;}</style>
 		   
 	<script src='../js/jquery-3.2.1.js'></script>
 	
@@ -70,11 +71,14 @@
 		<span><a href='.\showXMLQuestions.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
             if (login()){ $usr = trim($_GET['mail']);
 		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>See the questions (xml)</a></span>
+		<span><a href='.\handlingQuizesAJAX.php<?php
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Manage Quizzes (AJAX)</a></span>
 	</nav>
     <section class="main" id="s1">
         
 
-	
+	<div class="table-wrapper">
 		
 	
 <?php  
@@ -110,6 +114,7 @@ echo "</table>";
   }
 }
   ?>
+  </div>
     </section>
 	
 	<footer class='main' id='f1'>

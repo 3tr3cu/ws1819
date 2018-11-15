@@ -97,6 +97,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 					exit();
 				}
 				else{
+				    
+				    	$xml = simplexml_load_file('../xml/counter.xml');
+				    	$count = $xml->count;
+				    	$count= intval($count);
+				    	$count++;
+				    	$xml= "<counts><count>".$count."</count></counts>";
+				    	$xml = new SimpleXMLElement($xml);
+				    	$xml->asXML('../xml/counter.xml');
+				        
+				    
+				    
 					echo "<script>window.location = './layout.php?mail=$usr&pass=$pass'</script>";
 				}
 			}
