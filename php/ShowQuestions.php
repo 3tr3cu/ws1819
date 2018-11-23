@@ -76,6 +76,9 @@
 		<span><a href='.\handlingQuizesAJAX.php<?php
             if (login()){ $usr = trim($_GET['mail']);
 		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Manage Quizzes (AJAX)</a></span>
+		<span><a href='.\getquest.php<?php
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Consult Questions</a></span>
 	</nav>
     <section class="main" id="s1">
         
@@ -92,7 +95,7 @@ $db = mysqli_connect($zerbitzaria, $erabiltzailea, $gakoa, $db);
 if(!$db)  { echo "Database couldn't be connected<br>
 Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";} 
 
-else{ $result = mysqli_query($db,"SELECT * FROM questions "); 
+else{ $result = mysqli_query($db,"SELECT * FROM questions"); 
   
   if (mysqli_num_rows($result) == 0){echo "There is no information to display.";}
   else{ echo "<table border='1'>

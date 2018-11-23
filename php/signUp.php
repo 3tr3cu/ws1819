@@ -15,10 +15,15 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../styles/smartphone.css' />
-		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}</style>
+		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
+		   p{color: #ff0000}
+		   </style>
 		   
 	<script src='../js/jquery-3.2.1.js'></script>
 	<script> 
+	var validMail;
+	var validPass;
+	
 		$(document).ready(function(){
 			
 			$("form").submit(function(e){
@@ -42,6 +47,10 @@
 							{
 								alert('Invalid password. Must be at least 8 characters long without spaces.');
 								e.preventDefault();
+							} else if (validMail==false||validPass==false){
+							    
+							    alert('Invalid data.');
+								e.preventDefault();
 							}
 						
 						}
@@ -62,6 +71,53 @@
 			
 		
 		});
+		
+	function isemailok(){
+		$.ajax({
+			type:"GET",
+			url: "./egiaztatuEmaila.php?mail="+$("#mail").val(),
+			success: function(data){
+				if (data=="BAI"){
+					$("#mailvalidation").text("");
+					validMail=true;
+				}
+				else if(data=="EZ"){
+					$("#mailvalidation").text("Email must be part of the course.");
+					validMail=false;
+				}
+				else {
+					$("#mailvalidation").text("Validation failed due to external circumstances.");
+					validMail=false;
+				}
+				
+			} 
+		});
+	}
+	
+	function ispassok(){
+		$.ajax({
+			type: "GET",
+			url: "./egiaztatuPasahitza.php?pass="+$("#p").val(),
+			success: function(data){
+				if (data=="BAI"){
+					$("#passvalidation").text("");
+					validPass=true;
+				}
+				else if(data=="EZ"){
+					$("#passvalidation").text("Service denied");
+					validPass=false;
+				}
+				else if (data="EZ2"){
+				    $("#passvalidation").text("Not safe enough of a password.");
+					validPass=false;
+				}
+				else if (data="DC") {
+					$("#passvalidation").text("Validation failed due to external circumstances.");
+					validPass=false;
+				}
+			}
+		});
+	}
 	
 	</script>
 	
@@ -84,13 +140,13 @@
 		<form id="regF" name="regF" method="post">
 	
 			Email: <br>
-			<input name="mail" id="mail" type="text" required></input> <br>
+			<input name="mail" id="mail" type="text" onchange="isemailok()" required></input> <br>
 		
 			Full name (at least one surname): <br>
 			<input name="n" id="n" type="text" required></input> <br>
 			
 			Password (at least 8 characters long): <br>
-			<input name="p" id="p" type="password" required></input> <br>
+			<input name="p" id="p" type="password" onchange="ispassok()" required></input> <br>
 			
 			Confirm password: <br>
 			<input name="p2" id="p2" type="password" required></input> <br>
@@ -100,6 +156,9 @@
 			<input type="submit" id="bttn" name="sbmitBttn" value="Submit"></input> <input type="reset" id="rstbttn"></input> <br>
 		
 	</form>
+			<p id="mailvalidation"></p>
+			<p id="passvalidation"></p>
+
 	
 	<?php 
 
@@ -118,28 +177,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				if(preg_match('/^\\S{8,}$/',$varP)){
 					
 					$validData=true;		
-				
 				}
-				
 			}
-		}
-
-		
+		}	
 		if (!$validData){echo"No cheating!";} else {
-		
-		$db = mysqli_connect($zerbitzaria, $erabiltzailea, $gakoa, $db);
-		if (!$db)
-		{echo "Problem accessing the database. Try again, please.";}
-		else{
+		    
 			
-			$sql = "INSERT INTO users (mail, name, password) VALUES ('$varMail', '$varN', '$varP')";
-			$ema = mysqli_query($db,$sql);
-			if (!$ema){echo "There has been an error. Try again, please.";} else {
-			echo "Registered succesfully! Please log in to continue.";
-			}
-		}
-mysqli_close($db);} }
-
+				$db = mysqli_connect($zerbitzaria, $erabiltzailea, $gakoa, $db);
+				if (!$db){
+					echo "Problem accessing the database. Try again, please.";}
+				else{
+					$sql = "INSERT INTO users (mail, name, password) VALUES ('$varMail', '$varN', '$varP')";
+					$ema = mysqli_query($db,$sql);
+					if (!$ema){
+						echo "There has been an error. Try again, please.";
+						} else {
+						echo "Registered succesfully! Please log in to continue.";
+					}
+				}
+				mysqli_close($db);
+			
+		} 
+}
 ?>
     </section>
 	

@@ -111,6 +111,9 @@
 		<span><a href='.\handlingQuizesAJAX.php<?php
             if (login()){ $usr = trim($_GET['mail']);
 		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Manage Quizzes (AJAX)</a></span>
+		<span><a href='.\getquest.php<?php
+            if (login()){ $usr = trim($_GET['mail']);
+		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Consult Questions</a></span>
 		
 	</nav>
     <section class="main" id="s1">
