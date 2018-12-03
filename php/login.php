@@ -1,3 +1,4 @@
+<?php session_start (); ?>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -50,8 +51,8 @@
   
   include 'dbConfig.php';
   
-function login()
-{
+	function login()
+	{
 	if(empty($_GET['mail']))
 	{
 
@@ -65,7 +66,7 @@ function login()
 	
 	return true;
 		
-}  
+	}  
 
 
 
@@ -98,17 +99,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 				}
 				else{
 				    
-				    	$xml = simplexml_load_file('../xml/counter.xml');
-				    	$count = $xml->count;
-				    	$count= intval($count);
-				    	$count++;
-				    	$xml= "<counts><count>".$count."</count></counts>";
-				    	$xml = new SimpleXMLElement($xml);
-				    	$xml->asXML('../xml/counter.xml');
+				    $xml = simplexml_load_file('../xml/counter.xml');
+				    $count = $xml->count;
+				    $count= intval($count);
+				    $count++;
+				    $xml= "<counts><count>".$count."</count></counts>";
+				    $xml = new SimpleXMLElement($xml);
+				    $xml->asXML('../xml/counter.xml');
 				        
-				    
-				    
-					echo "<script>window.location = './layout.php?mail=$usr&pass=$pass'</script>";
+					$_SESSION["usr"]= $usr;
+					if(strpos($usr, 'ikasle') !== false){
+						$type = 1; //ikasle
+					} else {
+						$type = 2; //admin
+					}
+					$_SESSION["type"]= $type;
+				    if ($type== 1){
+						echo "<script>window.location = './handlingQuizesAJAX.php'</script>";
+					} else if ($type == 2){
+						echo "<script>window.location = './handlingAccounts.php'</script>";
+					}
 				}
 			}
 		}

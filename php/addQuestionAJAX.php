@@ -1,3 +1,4 @@
+<?php session_start (); ?>
 <!DOCTYPE HTML>
 <HTML>
 <head> <title>Add Questions</title> 
@@ -17,33 +18,31 @@
   </head>
   <body>
       
-              <?php
+	<?php
               
-              function login()
-{
-	if(empty($_POST['mail']))
+	function login()
 	{
+		if(!isset($_SESSION['usr']))
+		{
 
-		return false;
-	}
-	if(empty($_POST['pass']))
-	{
-
-		return false;
-	}
+			return false;
+		}
+		if(!isset($_SESSION['type']))
+		{
+			if($_SESSION['type']!=1) return false;
+		}
 	
-	return true;
+		return true;
 		
-}  
+	}  
               
               
 
-    if (login()){ }else {exit("Not authorized.");}
+    if (login()){ }else {exit("Not authorized");}
             
-include 'dbConfig.php';
+	include 'dbConfig.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') 
-{	
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {	
 		$varMail = $_POST['mail'];
 		$varQ = $_POST['q'];
 		$varRight = $_POST['respRight'];

@@ -1,3 +1,4 @@
+<?php session_start (); ?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -18,55 +19,48 @@
   <div id='page-wrap'>
       <header class='main' id='h1'>
     
-      <?php function login()
+      <?php 	function login()
 {
-	if(empty($_GET['mail']))
+	if(!isset($_SESSION['usr']))
 	{
 
 		return false;
 	}
-	if(empty($_GET['pass']))
+	if(!isset($_SESSION['type']))
 	{
-
+		
 		return false;
 	}
 	
 	return true;
 		
-}  
+	}
+	
 
-	          if( $_SERVER['REQUEST_METHOD'] == 'GET'){
-                if (login()){
-                        $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']);
-                echo "You are currently logged in, $usr. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>";
-                 } else { echo '<span class="right"><a href=".\login.php">Log In</a> </span><span class="right"><a href=".\signUp.php">Sign up</a> </span>'; }
-	          }else { echo '<span class="right"><a href=".\login.php">Log In</a> </span><span class="right"><a href=".\signUp.php">Sign up</a> </span>'; }
-        ?>
+	if (login()){
+		$usr = trim($_SESSION['usr']);
+		echo "You are currently logged in, $usr. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>";
+    } else {
+		echo '<span class="right"><a href=".\login.php">Log In</a> </span><span class="right"><a href=".\signUp.php">Sign up</a> </span>'; 
+	}
+	          
+	?>
 	<h2>Credits</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Home</a></span>
+		<span><a href='layout.php'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='credits.php<?php if( $_SERVER['REQUEST_METHOD'] == 'GET'){
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";}} ?>'>Credits</a></span>
-		
-        <?php
-        if( $_SERVER['REQUEST_METHOD'] == 'GET'){
-            if (login()){
-                
-        $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']);
-                echo "<span><a href='.\addQuestion.php?mail=$usr&pass=$pass'>Add a question</a></span>
-		<span><a href='.\ShowQuestions.php?mail=$usr&pass=$pass'>See the questions (php)</a></span>
-		<span><a href='.\showXMLQuestions.php?mail=$usr&pass=$pass'>See the questions (xml)</a></span><span><a href='.\handlingQuizesAJAX.php?mail=$usr&pass=$pass'>Manage Quizzes (AJAX)</a></span><span><a href='.\getquest.php?mail=$usr&pass=$pass'>Consult Questions</a></span>";
-            }
-        }
-        
-        ?>
+		<span><a href='credits.php'>Credits</a></span>
+		<?php if(login()){
+			if($_SESSION['type']==1){
+echo "<span><a href='.\handlingQuizesAJAX.php'>Manage Quizzes (AJAX)</a></span>";
+			} else if ($_SESSION['type']==2){
+				echo "
+		<span><a href='.\handlingAccounts.php'>Manage Accounts</a></span>";
+			}
+			
+			
+		}?>
 	</nav>
     <section class="main" id="s1">
     

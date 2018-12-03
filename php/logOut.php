@@ -1,3 +1,9 @@
+<?php 
+session_start (); 
+unset ($_SESSION['usr']);
+unset ($_SESSION['type']);
+session_destroy(); 
+?>
 <!DOCTYPE HTML>
 <HTML>
 <head> <title>Log out</title> </head>

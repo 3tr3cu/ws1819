@@ -1,3 +1,4 @@
+<?php session_start (); ?>
 <!DOCTYPE HTML>
 <HTML>
 <head> <title>Managing Questions</title> 
@@ -31,21 +32,18 @@ thead tr{
 	<?php
 	
 	function login()
-{
-	if(empty($_GET['mail']))
 	{
-
-		return false;
-	}
-	if(empty($_GET['pass']))
-	{
-
-		return false;
-	}
-	
+		if(!isset($_SESSION['usr']))
+		{
+			return false;
+		}
+		if(!isset($_SESSION['type']))
+		{
+			if($_SESSION['type']!=1)	return false;
+		}
 	return true;
-		
-}  ?>
+	}  
+	?>
 
 	
     //javascript atala
@@ -73,9 +71,8 @@ thead tr{
 						    xhro = new XMLHttpRequest();
                             xhro.onreadystatechange=function(){
                             if (xhro.readyState==4 && xhro.status==200)
-                                 {document.getElementById("feedback").innerHTML=xhro.responseText; 
-                }
-        }
+                                 {document.getElementById("feedback").innerHTML=xhro.responseText; }
+							}
 						    
 						    xhro.open("POST", "addQuestionAJAX.php",false);
                             xhro.setRequestHeader("Content-type",
@@ -90,21 +87,19 @@ thead tr{
                             var DIF= document.getElementById("dif").value;
                             var sbj= document.getElementById("subj").value;
                             
-                            var params="mail="+email+"&q="+quest+"&respRight="+RR+"&respWr1="+RW1+"&respWr2="+RW2+"&respWr3="+RW3+"&dif="+DIF+"&subj="+sbj+"<?php
-             $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "&mail=$usr&pass=$pass";?>";
+                            var params="mail="+email+"&q="+quest+"&respRight="+RR+"&respWr1="+RW1+"&respWr2="+RW2+"&respWr3="+RW3+"&dif="+DIF+"&subj="+sbj;
 		
                             xhro.send(params);
                             
                             $.ajax({
-	             type: "GET",
-	             url: "./showXMLQuestionsAJAX.php<?php echo "?mail=$usr&pass=$pass";?>", success: function(data){
+								type: "GET",
+								url: "./showXMLQuestionsAJAX.php", success: function(data){
 	                 
-	                 $("#tablearea").html(data);
+									$("#tablearea").html(data);
 
 	                 
-	             }
-	         });
+								}
+							});
 						}
 						
 					}
@@ -137,35 +132,16 @@ thead tr{
       
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-          You are currently logged in, <?php echo $_GET['mail'];?>. <span class='right'><a href='.\logOut.php'>Log Out </a> | | <?php	$xml = simplexml_load_file('../xml/counter.xml');
+          You are currently logged in, <?php echo $_SESSION["usr"];?>. <span class='right'><a href='.\logOut.php'>Log Out </a> | | <?php	$xml = simplexml_load_file('../xml/counter.xml');
 				    	$count = $xml->count;
 				    	echo "$count online";?></span>
 	<h2>Handling Quizzes</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='./layout.php<?php 
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Home</a></span>
-		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='./credits.php<?php
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Credits</a></span>
-		<span><a href='.\addQuestion.php<?php
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Add a question</a></span>
-		<span><a href='.\ShowQuestions.php<?php
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions (php)</a></span>
-		<span><a href='.\showXMLQuestions.php<?php
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>See the questions (xml)</a></span>
-		<span><a href='.\handlingQuizesAJAX.php<?php
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Manage Quizzes (AJAX)</a></span>
-		<span><a href='.\getquest.php<?php
-            if (login()){ $usr = trim($_GET['mail']);
-		$pass = trim($_GET['pass']); echo "?mail=$usr&pass=$pass";} ?>'>Consult Questions</a></span>
-		
+		<span><a href='./layout.php'>Home</a></span>
+		<span><a href='./quizzes.php'>Quizzes</a></span>
+		<span><a href='./credits.php'>Credits</a></span>
+		<span><a href='.\handlingQuizesAJAX.php'>Manage Quizzes (AJAX)</a></span>
 	</nav>
     <section class="main" id="s1">
         
@@ -173,7 +149,7 @@ thead tr{
 	
 
 	
-			<input name="mail" id="mail" type="text" value=<?php echo"$usr"?> style="display: none" required></input>
+			<input name="mail" id="mail" type="text" value=<?php $usr =trim($_SESSION['usr']); echo "$usr";?> style="display: none" required></input>
 		
 			Question:(*) <br>
 			<input name="q" id="q" type="text" required></input> <br>
@@ -211,7 +187,7 @@ thead tr{
 	     $("#getbyuser").click(function(){
 	         $.ajax({
 	             type: "GET",
-	             url: "./showXMLQuestionsAJAX.php<?php echo "?mail=$usr&pass=$pass";?>", success: function(data){
+	             url: "./showXMLQuestionsAJAX.php", success: function(data){
 	                 
 	                 $("#tablearea").html(data);
 

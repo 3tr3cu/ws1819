@@ -1,32 +1,20 @@
-<?php
+<?php session_start ();
               
-              function login()
-{
-	if(empty($_GET['mail']))
+	function login()
 	{
-
-		return false;
-	}
-	if(empty($_GET['pass']))
-	{
-
-		return false;
-	}
-	
+		if(!isset($_SESSION['usr']))
+		{
+			return false;
+		}
+		if(!isset($_SESSION['type']))
+		{
+			if($_SESSION['type']!=1)	return false;
+		}
 	return true;
-		
-}  
-              
-              
-              if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            	if (login()){ 
-	                
-                	}else {exit("Not authorized.");}
-            
-        } else {exit("Not authorized.");}
-	
+	}              
+	if (login()){ }else {exit("Not authorized.");}		
 
-$xml = simplexml_load_file("../xml/questions.xml");
+	$xml = simplexml_load_file("../xml/questions.xml");
 
 
 
@@ -47,7 +35,7 @@ else{ if(empty($xml->children())) {
 </tr>";
 
 foreach ($xml->children() as $ai){
-    if ($ai['author']==$_GET['mail']){
+    if ($ai['author']==$_SESSION['usr']){
 
   echo "<tr>";
   echo "<td>" . $ai['author'] . "</td>";
