@@ -23,14 +23,13 @@
 		   #h1{font-size:small}</style>
 		   	<script src='../js/jquery-3.2.1.js'></script>
 		   	<script> 
-	var validMail;
+
 	var validPass;
 	
 		$(document).ready(function(){
 			
 			$("form").submit(function(e){
-				var email = new RegExp('^([a-z]+)([0-9]{3})@ikasle\\.ehu\\.eus$');
-				var izena = new RegExp('^[A-Z][a-z]+( [A-Z][a-z]+)+$');
+
 				var pasahitza = new RegExp('^\\S.{7,}$');
 				
 				var p1 = $("#p").val();
@@ -38,33 +37,17 @@
 				
 				if (p1 == p2){
 				
-					var Val = $("#mail").val();
-					if (email.test(Val))
+				    Val = $("#p").val();
+					if (!pasahitza.test(Val))
 					{
-						Val = $("#n").val();
-						if (izena.test(Val))
-						{
-							Val = $("#p").val();
-							if (!pasahitza.test(Val))
-							{
-								alert('Invalid password. Must be at least 8 characters long without spaces.');
-								e.preventDefault();
-							} else if (validMail==false||validPass==false){
-							    
-							    alert('Invalid data.');
-								e.preventDefault();
-							}
-						
-						}
-						else{
-						alert('Invalid name. Please, watch your capitalization and do not leave any empty spaces.');
+					    alert('Invalid password. Must be at least 8 characters long without spaces.');
 						e.preventDefault();
-						}
-					
-					} else {
-					alert("Enter a valid ikasle.ehu.eus domain email");
-					e.preventDefault();
+					} else if (validPass==false){
+						    
+					    alert('Try a safer password.');
+						e.preventDefault();
 					}
+			
 				} else {
 					alert("The two passwords don't match.");
 				e.preventDefault();
@@ -74,28 +57,7 @@
 		
 		});
 		
-	function isemailok(){
-		$.ajax({
-			type:"GET",
-			url: "./egiaztatuEmaila.php?mail="+$("#mail").val(),
-			success: function(data){
-				if (data=="BAI"){
-					$("#mailvalidation").text("");
-					validMail=true;
-				}
-				else if(data=="EZ"){
-					$("#mailvalidation").text("Email must be part of the course.");
-					validMail=false;
-				}
-				else {
-					$("#mailvalidation").text("Validation failed due to external circumstances.");
-					validMail=false;
-				}
-				
-			} 
-		});
-	}
-	
+
 	function ispassok(){
 		$.ajax({
 			type: "GET",
@@ -129,7 +91,7 @@
     
     <span class="right"><a href=".\login.php">Log In</a> </span> | <span class="right"><a href=".\signUp.php">Sign up</a> </span>
     
-	<h2>User Registration</h2>
+	<h2>Password Reset</h2>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="#">Menu</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,29 +110,31 @@
 
 
     <section class="main" id="s1">
+        
+        <p class="important">Remember: if you leave this page, you will have to request the code again!</p> 
         <br>
+        <p> Insert a new password (at least 8 characters long, NO SPACES).</p>
+	    
+		<form id="reset" name="reset" method="post">
 	
-		<form id="regF" name="regF" method="post">
-	
-			Email: <br>
-			<input name="mail" id="mail" type="text" onchange="isemailok()" required></input> <br> <br>
-		
-			Full name (at least one surname): <br>
-			<input name="n" id="n" type="text" required></input> <br> <br>
-			
-			Password (at least 8 characters long): <br>
+            New Password: <br>
 			<input name="p" id="p" type="password" onchange="ispassok()" required></input> <br> <br>
 			
 			Confirm password: <br>
 			<input name="p2" id="p2" type="password" required></input> <br> <br>
 			
-			<p class="important">All fields are mandatory</p>  <br>
+            <input type="hidden" id="mail" name="custId" value="<?php if (!($_SERVER['REQUEST_METHOD'] == 'POST')){
+            
+                if (!empty($_GET['mail'])){
+                     $usr = $_GET['mail'];
+                    echo"$usr";}
+            } ?>">
 	
-			<input type="submit" id="bttn" name="sbmitBttn" value="Submit"></input> <input type="reset" id="rstbttn"></input><br> <br>
+			<input type="submit" id="bttn" name="sbmitBttn" value="Submit"></input><br> <br>
 		
 	</form>
-			<p id="mailvalidation"></p>
-			<p id="passvalidation"></p>
+
+			<p style="color:red" id="passvalidation"></p>
 
 	
 	<?php 
@@ -179,20 +143,18 @@ include 'dbConfig.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
 {	
-		$varMail = $_POST['mail'];
-		$varN = $_POST['n'];
+
 		$varP = $_POST['p'];
 		
 		$validData= false;
 		
-		if(preg_match('/^([a-z]+)([0-9]{3})@ikasle\\.ehu\\.eus$/',$varMail)){
-			if (preg_match('/^[A-Z][a-z]+( [A-Z][a-z]+)+$/',$varN)){
-				if(preg_match('/^\\S{8,}$/',$varP)){
+
+		if(preg_match('/^\\S{8,}$/',$varP)){
 					
 					$validData=true;		
 				}
-			}
-		}	
+		
+	
 		if (!$validData){echo"No cheating!";} else {
 		    
 			
@@ -201,17 +163,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					echo "Problem accessing the database. Try again, please.";}
 				else{
 				    $hash = password_hash($_POST['p'], PASSWORD_BCRYPT);
-					$sql = "INSERT INTO users (mail, name, password) VALUES ('$varMail', '$varN', '$hash')";
+					$sql = "UPDATE users set password ='$hash'";
 					$ema = mysqli_query($db,$sql);
 					if (!$ema){
 						echo "There has been an error. Try again, please.";
 						} else {
-						echo "Registered succesfully! Please log in to continue.";
+						echo "<script>window.location = './pscgSuccess.php'</script>";
 					}
 				}
 				mysqli_close($db);
 			
 		} 
+} else {
+    if(empty($_GET['mail'])||empty($_GET['cod'])){
+        exit("Not Authorized");
+}
+    
 }
 ?>
     </section>

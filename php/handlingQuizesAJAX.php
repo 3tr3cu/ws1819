@@ -3,7 +3,9 @@
 <HTML>
 <head> <title>Managing Questions</title> 
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Add a question</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel='stylesheet' type='text/css' href='../styles/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -15,16 +17,22 @@
 		   href='../styles/smartphone.css' />
 		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
 		   #feedback{color:rgb(55,176,223);}
-		   .table-wrapper{float: left; width: 90%; height: 1000000px; overflow: auto;}
+		   .table-wrapper{ width: 90%; overflow: auto;}
+		   table {
+    margin-left:auto; 
+    margin-right:auto;
+  }
 tbody{
   display:block;
   overflow:auto;
-  height:300px;
+  height:200px;
   width:100%;
 }
 thead tr{
   display:block;
 }
+.navbar-collapse.collapse.in { display: block!important; }
+#h1{font-size:small}
 		   </style>
 		   
 	<script src='../js/jquery-3.2.1.js'></script>
@@ -44,8 +52,29 @@ thead tr{
 	return true;
 	}  
 	?>
+        window.onload = function() {
+    $.ajax({
+				    type: "GET",
+					url: "./questcounter.php", success: function(data){
+	                 
+									$("#questcounter").html(data);
 
-	
+	                 
+								}
+							});
+    };
+	    window.setInterval(function(){ 
+	        $.ajax({
+				    type: "GET",
+					url: "./questcounter.php", success: function(data){
+	                 
+									$("#questcounter").html(data);
+
+	                 
+								}
+							});
+        
+    }, 20000);
     //javascript atala
 	
 		function checkandsend(str1, str2){
@@ -90,6 +119,16 @@ thead tr{
                             var params="mail="+email+"&q="+quest+"&respRight="+RR+"&respWr1="+RW1+"&respWr2="+RW2+"&respWr3="+RW3+"&dif="+DIF+"&subj="+sbj;
 		
                             xhro.send(params);
+                            
+	                        $.ajax({
+				            type: "GET",
+				        	url: "./questcounter.php", success: function(data){
+	                 
+							$("#questcounter").html(data);
+                            	}
+							});
+        
+                                                                        
                             
                             $.ajax({
 								type: "GET",
@@ -136,13 +175,22 @@ thead tr{
 				    	$count = $xml->count;
 				    	echo "$count online";?></span>
 	<h2>Handling Quizzes</h2>
-    </header>
-	<nav class='main' id='n1' role='navigation'>
-		<span><a href='./layout.php'>Home</a></span>
-		<span><a href='./quizzes.php'>Quizzes</a></span>
-		<span><a href='./credits.php'>Credits</a></span>
-		<span><a href='.\handlingQuizesAJAX.php'>Manage Quizzes (AJAX)</a></span>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Menu</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="layout.php">Home </a>
+      <a class="nav-item nav-link" href="#">Quizzes</a>
+      <a class="nav-item nav-link" href="credits.php">Credits<span class="sr-only">(current)</span></a>
+	  <a class="nav-item nav-link" href="handlingQuizesAJAX.php">Manage Quizzes</a>
+			</div>
+		</div>
 	</nav>
+    </header>
+
     <section class="main" id="s1">
         
 
@@ -175,7 +223,7 @@ thead tr{
 	
 			<button onclick="checkandsend()">Send</button> <br>
 		
-	
+	<br> <p id="questcounter"></p>
 	<br> <p id="feedback"></p>
 	<br>
 	    <button id="getbyuser">Show your questions</button>
@@ -209,5 +257,8 @@ thead tr{
 		 <a href='https://github.com/3tr3cu/ws1819'>Link GITHUB</a>
 	</footer>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

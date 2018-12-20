@@ -18,39 +18,19 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../styles/smartphone.css' />
 		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
-		   .navbar-collapse.collapse.in { display: block!important; }
-		   #h1{font-size:small}</style>
+		   .navbar-collapse.collapse.in { display: block!important; }</style>
+		   	<script src='../js/jquery-3.2.1.js'></script>
+		   	<script> 
+
+	</script>
   </head>
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
     
-      <?php function login()
-{
-	if(!isset($_SESSION['usr']))
-	{
-
-		return false;
-	}
-	if(!isset($_SESSION['type']))
-	{
-
-		return false;
-	}
-	
-	return true;
-		
-}  
-
-if (login()){
-		$usr = trim($_SESSION['usr']);
-		echo "You are currently logged in, $usr. <span class='right'><a href='.\logOut.php'>Log Out</a> </span>";
-    } else {
-		echo '<span class="right"><a href=".\login.php">Log In</a> </span> | <span class="right"><a href=".\signUp.php">Sign up</a> </span>'; 
-	}
-        ?>
+    <span class="right"><a href=".\login.php">Log In</a> </span><span class="right"><a href=".\signUp.php">Sign up</a> </span>
     
-	<h2>Credits</h2>
+	<h2>User Registration</h2>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="#">Menu</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,19 +38,10 @@ if (login()){
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="layout.php">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="layout.php">Home</a>
       <a class="nav-item nav-link" href="#">Quizzes</a>
       <a class="nav-item nav-link" href="credits.php">Credits</a>
-	  <?php if(login()){
-			if($_SESSION['type']==1){
-			echo '<a class="nav-item nav-link" href="handlingQuizesAJAX.php">Manage Qustions</a>';
-			} else if ($_SESSION['type']==2){
-			echo '<a class="nav-item nav-link" href="handlingAccounts.php">Manage Accounts</a>';
-			}
-			
-			
-		}?>
-			</div>
+	</div>
 		</div>
 	</nav>
     </header>
@@ -78,20 +49,63 @@ if (login()){
 
     <section class="main" id="s1">
     
-	<div>
-	<h3>Xabier Jimenez</h3>
-	Specialized in <b>Software Engineering</b><br>
-	<img src='../images/2.jpg' width="200"><br>
-	From <b>Donostia </b>
-	</div>
+    <section class="main" id="s1">
 	
-	<div>
-	<h3>Endika Trecu</h3>
-	Specialized in <b>Software Engineering</b><br>
-	<img src='../images/1.jpg' width="200"><br>
-	From <b>Andoain</b>
-	</div>
-	</section>
+		<form id="regF" name="regF" method="post">
+	
+			Email: <br>
+			<input name="mail" id="mail" type="text" required></input> <br>
+		
+			Full name (at least one surname): <br>
+			<input name="n" id="n" type="text" required></input> <br>
+			
+			Password (at least 8 characters long): <br>
+			<input name="p" id="p" type="password"  required></input> <br>
+			
+			Confirm password: <br>
+			<input name="p2" id="p2" type="password" required></input> <br>
+			
+			All fields are mandatory <br>
+	
+			<input type="submit" id="bttn" name="sbmitBttn" value="Submit"></input> <input type="reset" id="rstbttn"></input> <br>
+		
+	</form>
+
+
+	
+	<?php 
+
+include 'dbConfig.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+{	
+		$varMail = $_POST['mail'];
+		$varN = $_POST['n'];
+		$varP = $_POST['p'];
+		
+		$validData= true;	
+		if (!$validData){echo"No cheating!";} else {
+		    
+			
+				$db = mysqli_connect($zerbitzaria, $erabiltzailea, $gakoa, $db);
+				if (!$db){
+					echo "Problem accessing the database. Try again, please.";}
+				else{
+				    $hash = password_hash($_POST['p'], PASSWORD_BCRYPT);
+					$sql = "INSERT INTO users (mail, name, password) VALUES ('$varMail', '$varN', '$hash')";
+					$ema = mysqli_query($db,$sql);
+					if (!$ema){
+						echo "There has been an error. Try again, please.";
+						} else {
+						echo "Registered succesfully! Please log in to continue.";
+					}
+				}
+				mysqli_close($db);
+			
+		} 
+}
+?>
+    </section>
 	<footer class='main' id='f1'>
 		 <a href='https://github.com/3tr3cu/ws1819'>Link GITHUB</a>
 	</footer>

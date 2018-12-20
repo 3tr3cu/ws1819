@@ -1,9 +1,10 @@
 <?php session_start (); ?>
 <!DOCTYPE HTML>
 <HTML>
-<head> <title>Managing Questions</title> 
+<head> <title>Managing Accounts</title> 
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Add a question</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel='stylesheet' type='text/css' href='../styles/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -14,7 +15,9 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../styles/smartphone.css' />
 		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
-		   .table-wrapper{float: left; width: 90%; height: 650px; overflow: auto;}
+		   .table-wrapper{width: 90%; overflow: auto;}
+		    .navbar-collapse.collapse.in { display: block!important; }
+		    #h1{font-size:small}
 		   </style>
 		   
 	<script src='../js/jquery-3.2.1.js'></script>
@@ -63,14 +66,22 @@
 				    	$count = $xml->count;
 				    	echo "$count online";?></span>
 	<h2>Handling Accounts</h2>
-    </header>
-	<nav class='main' id='n1' role='navigation'>
-		<span><a href='./layout.php'>Home</a></span>
-		<span><a href='./quizzes.php'>Quizzes</a></span>
-		<span><a href='./credits.php'>Credits</a></span>
-		<span><a href='.\handlingAccounts.php'>Manage Accounts</a></span>
-		
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Menu</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="layout.php">Home </a>
+      <a class="nav-item nav-link" href="#">Quizzes</a>
+      <a class="nav-item nav-link" href="credits.php">Credits<span class="sr-only">(current)</span></a>
+	  <a class="nav-item nav-link" href="handlingAccounts.php">Manage Accounts</a>
+			</div>
+		</div>
 	</nav>
+    </header>
+
     <section class="main" id="s1">
 	
 		
@@ -125,14 +136,17 @@ Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";
 		echo "There is no information to display.";
 		}else{
 			echo "<table border='1'>
+			<col width='130'>
+                <col width='80'>
+                <col width='90'>
 				<tr>
 				<th>Izena</th>
 				<th>Pasahitza</th>
-				<th>Egorea</th>
+				<th>&nbsp;Egoera&nbsp;</th>
 				</tr>";
 				$num = 0;
 			while($row = mysqli_fetch_array($result))
-			{if(strpos($row['mail'],'ikasle')== false) continue;
+			{   if(strpos($row['mail'], 'ikasle') == false)continue;
 				if ($row['Blocked']==true){
 					$blocked = "checked";
 				}else{
@@ -140,7 +154,7 @@ Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";
 				} 
 				echo "<tr>";
 				echo "<td>" . $row['mail'] . "</td>";
-				echo "<td>" . $row['password'] . "</td>";
+				echo "<td><p style='font-size:12px'>" . $row['password'] . "</p></td>";
 				echo "<td> <form id='save$num' name='save' method='post'> <input type='checkbox' name='blockBox' $blocked>Block</input><br><input type='checkbox' name='deletBox' >Delete</input><br><input type='submit' id='bttn$num' name='sbmitBttn$num' value='Submit'></input><input type='text' name='name' value='" . $row['mail'] . "' style='display: none'></form></td>";
 				echo "</tr>";
 				$num++;
@@ -152,12 +166,15 @@ Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";
 	?>
 			</div>
 
-		</form>
+		
     </section>
 	
 	<footer class='main' id='f1'>
 		 <a href='https://github.com/3tr3cu/ws1819'>Link GITHUB</a>
 	</footer>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

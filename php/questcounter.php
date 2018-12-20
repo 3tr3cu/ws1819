@@ -18,36 +18,21 @@
 
 
 
-if(!$xml)  { echo "No xml file was found<br>
-Try again by refreshing, or <a href='./layout.php'> go back, please.</a>";} 
+if(!$xml)  { echo "Can't display your amount of questions: No xml file was found<br>
+Try again by refreshing.</a>";} 
 
 else{ if(empty($xml->children())) {
   
- echo "There is no information to display.";}
+ echo "There are currently no questions saved..";}
   else{
 
-  echo "
- 
-  <table border='1'>
-<tr>
-<th>Mail</th>
-<th>Question</th>
-<th>Right answer</th>
-
-</tr>";
-
+$total =0; $yours =0;
 foreach ($xml->children() as $ai){
-
+$total++;
     if ($ai['author']==$_SESSION['usr']){
-
-
-  echo "<tr>";
-  echo "<td>" . $ai['author'] . "</td>";
-  echo "<td>" . $ai->itemBody->p . "</td>";
-  echo "<td>" . $ai->correctResponse->value . "</td>";
-  echo "</tr>";
+    $yours++;
   }}
-echo "</table>";
+echo "Number of entries by you: $yours/$total";
 
   }
 }
