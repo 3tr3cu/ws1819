@@ -1,7 +1,7 @@
 <?php
  session_start ();
-
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -25,7 +25,7 @@
   <div id='page-wrap'>
 	<header class='main' id='h1'>
     
-    <span class="right"><a href=".\login.php">Log In</a> </span>| <span class="right"><a href=".\signUp.php">Sign up</a> </span>
+    <span class="right"><a href=".\login.php">Log In</a> </span>| <span class="right"><a  href=".\signUp.php">Sign up</a> </span>
     
 	<h2>Log In</h2>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,38 +38,41 @@
       <a class="nav-item nav-link active" href="layout.php">Home</a>
       <a class="nav-item nav-link" href="#">Quizzes</a>
       <a class="nav-item nav-link" href="credits.php">Credits</a>
-	  <?php if(login()){
-			if($_SESSION['type']==1){
-			echo '<a class="nav-item nav-link" href="handlingQuizesAJAX.php">Manage Qustions</a>';
-			} else if ($_SESSION['type']==2){
-			echo '<a class="nav-item nav-link" href="handlingAccounts.php">Manage Accounts</a>';
-			}
-			
-			
-		}?>
+
 			</div>
 		</div>
 	</nav>
     </header>
 
 
-    <section class="main" id="s1">
+    <section class="main" id="s1" >
     
 	
-<div>
+<div style="text-align: center;" >
 
-	<br>
-
+	
+	<div  class="form-border"  >
 	<form id="log" name="log" method="get">
-	<label>E-mail address:</label>
-	<input name="mail" id="mail" type="text" required></input> <br> <br>
-	<label>Password:</label>
-	<input name="pass" id="pass" type="password" required></input> <br> <br>
-	<input type="submit" id="login"></input>  <br>
+	
+	<div class="form-group">
+	<label for="mail" >E-mail address:</label>
+	<input class="form-control" placeholder="Enter your email" name="mail" id="mail" type="text" required></input> 
+	</div>
+
+	 <div class="form-group">
+	<label for="pass">Password:</label>
+	<input class="form-control" placeholder="Enter your password"  name="pass" id="pass" type="password" required></input>
+	</div class="sa">
+
+	
+	<button type="submit" id='login' class="btn btn-primary">Login</button>
 	
 	</form>
     <br>
  <a href='accRecovery.php'><u>Forgot your password?</u></a>
+</div>
+</div>
+
 
 <?php  
   

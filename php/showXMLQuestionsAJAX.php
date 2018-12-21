@@ -28,7 +28,7 @@ else{ if(empty($xml->children())) {
 
   echo "
  
-  <table border='1'>
+  <table class='table table-striped table-dark' border='1' align='center'>
 <tr>
 <th>Mail</th>
 <th>Question</th>

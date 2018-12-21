@@ -4,5 +4,5 @@ body				{background: #999;}
 nav span				{margin: 0px 100px 0px 0px;}
 
 
-section				{height: 700px;}
+section				{min-height: 700px;}
 footer				{clear: both; display: block;}

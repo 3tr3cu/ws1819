@@ -74,7 +74,7 @@
 		    if ($resultCheck <1)
 		    {
 			    echo ("That user does not exist.");
-			    exit();
+			    
 		    }else{
 		        $sql = "SELECT * FROM recovery WHERE email ='$usr' ";
 		        $result = mysqli_query($db,$sql); 

@@ -15,7 +15,7 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../styles/smartphone.css' />
 		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
-		   .table-wrapper{width: 90%; overflow: auto;}
+		   .table-wrapper{width: 100%; text-align:center;}
 		    .navbar-collapse.collapse.in { display: block!important; }
 		    #h1{font-size:small}
 		   </style>
@@ -135,7 +135,7 @@ Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";
 		if (mysqli_num_rows($result) == 0){
 		echo "There is no information to display.";
 		}else{
-			echo "<table border='1'>
+			echo "<div class='table-wrapper'><div id='tablearea' class='table-responsive' style='display:inline-block;width:90%' > <table class='table table-striped table-dark' border='1' align='center'>
 			<col width='130'>
                 <col width='80'>
                 <col width='90'>
@@ -159,7 +159,7 @@ Try again by refreshing, or <a href='../layout.html'> go back, please.</a>";
 				echo "</tr>";
 				$num++;
 			}
-			echo "</table>";
+			echo "</table></div></div>";
 	
 		}
 	mysqli_close($db);}

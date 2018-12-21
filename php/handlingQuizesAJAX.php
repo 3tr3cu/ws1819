@@ -17,8 +17,8 @@
 		   href='../styles/smartphone.css' />
 		   <style>body{background-image: url("../images/bg.jpg");background-color: #cccccc;}
 		   #feedback{color:rgb(55,176,223);}
-		   .table-wrapper{ width: 90%; overflow: auto;}
-		   table {
+		   .table-wrapper{ width: 100%; text-align:center;}
+/*		   table {
     margin-left:auto; 
     margin-right:auto;
   }
@@ -30,7 +30,7 @@ tbody{
 }
 thead tr{
   display:block;
-}
+}*/
 .navbar-collapse.collapse.in { display: block!important; }
 #h1{font-size:small}
 		   </style>
@@ -40,7 +40,7 @@ thead tr{
 	<?php
 	
 	function login()
-	{
+	{	
 		if(!isset($_SESSION['usr']))
 		{
 			return false;
@@ -191,42 +191,66 @@ thead tr{
 	</nav>
     </header>
 
-    <section class="main" id="s1">
+    <section class="main" id="s1" style="">
         
 
 	
+    	<div style="text-align: center;" >
+    	<div  class="form-border"  >
+		
+    		
+			<input  name="mail" id="mail" type="text" value=<?php $usr =trim($_SESSION['usr']); echo "$usr";?> style="display: none" required></input>
+		
+			<div class="form-group">
+			<label  class="control-label" for="q" >Question:(*) :</label> 			
+			<input class="form-control" name="q" id="q" type="text" required></input> <br>
+			</div>
 
+			<div class="form-group">
+			<label class="control-label" for="respRight" >Right Answer:(*):</label> 
+			<input class="form-control" name="respRight" id="respRight" type="text" required></input> 
+			</div>
+
+			<div class="form-group">
+			<label class="control-label" for="respWr1" >Wrong Answer 1:(*):</label>
+			<input class="form-control" name="respWr1"  id="respWr1" required></input> 
+			</div>
+
+
+			<div class="form-group">
+			<label class="control-label" for="respWr2" >Wrong Answer 2:(*):</label>
+			<input  class="form-control" name="respWr2" id="respWr2" required></input> 
+			</div>
+
+
+			<div class="form-group">
+			<label class="control-label" for="respWr3" >Wrong Answer 2:(*):</label>
+			<input class="form-control" name="respWr3" id="respWr3" type="text" required></input> 
+			</div>
+
+			<div class="form-group">
+			<label class="control-label" for="dif" ">Difficulty (from 0 to 5):(*):</label>			
+			<input class="form-control" name="dif" id="dif" type="number" required></input> 
+			</div>
+
+			<div class="form-group">
+			<label class="control-label" for="dif" >Subject:(*):</label>	
+			<input class="form-control" name="subj" id="subj" type="text" required></input> <br>
+			</div>
+
+
+			<p>(Fields marked as (*) are mandatory) <p>
 	
-			<input name="mail" id="mail" type="text" value=<?php $usr =trim($_SESSION['usr']); echo "$usr";?> style="display: none" required></input>
-		
-			Question:(*) <br>
-			<input name="q" id="q" type="text" required></input> <br>
+			<button class="btn btn-primary" onclick="checkandsend()">Send</button> <br>
 			
-			Right Answer:(*) <br>
-			<input name="respRight" id="respRight" type="text" required></input> <br>
-			Wrong Answer 1:(*) <br>
-			<input name="respWr1"  id="respWr1" required></input> <br>
-		
-			Wrong Answer 2:(*) <br>
-			<input name="respWr2" id="respWr2" required></input> <br>
-			
-			Wrong Answer 3:(*) <br>
-			<input name="respWr3" id="respWr3" type="text" required></input> <br>
-		
-			Difficulty:(*) <br>
-			<input name="dif" id="dif" type="number" required></input> <br>
-			
-			Subject:(*) <br>
-			<input name="subj" id="subj" type="text" required></input> <br>
-			
-			(Fields marked as (*) are mandatory) <br>
-	
-			<button onclick="checkandsend()">Send</button> <br>
-		
 	<br> <p id="questcounter"></p>
 	<br> <p id="feedback"></p>
 	<br>
-	    <button id="getbyuser">Show your questions</button>
+
+
+	</div>
+	</div>
+	    <button  id="getbyuser" class="btn btn-info">Show your questions</button>
 	    <script>
 	        
 	        	//jquery atala
@@ -249,7 +273,7 @@ thead tr{
 	    </script>
 	
 	    <div class="table-wrapper">
-	        <div id="tablearea"></div>
+	        <div id="tablearea" class="table-responsive" style"display:inline-block;width:90%;"></div>
 	    </div>
     </section>
 	

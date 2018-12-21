@@ -150,25 +150,44 @@
     <section class="main" id="s1">
         <br>
 	
+
+<div style="text-align: center;" >
+
+<div  class="form-border"  >
 		<form id="regF" name="regF" method="post">
-	
-			Email: <br>
-			<input name="mail" id="mail" type="text" onchange="isemailok()" required></input> <br> <br>
+			
+			<div class="form-group">
+			<label class="control-label" for="mail" >Email:</label> 				
+   			 <input placeholder="Enter your email"  class="form-control" name="mail" id="mail" type="text" onchange="isemailok()" required></input>			
+			</div>
 		
-			Full name (at least one surname): <br>
-			<input name="n" id="n" type="text" required></input> <br> <br>
-			
-			Password (at least 8 characters long): <br>
-			<input name="p" id="p" type="password" onchange="ispassok()" required></input> <br> <br>
-			
-			Confirm password: <br>
-			<input name="p2" id="p2" type="password" required></input> <br> <br>
-			
-			<p class="important">All fields are mandatory</p>  <br>
+			<div class="form-group">		
+			<label  for="n" >Full name:</label> 
+			<input placeholder="Enter your Name (at least one surname)"  class="form-control" name="n" id="n" type="text" required></input> 
+			</div>
+
+			<div class="form-group">	
+			<label for="p" >Password:</label> 
+			<input placeholder="Enter a password at least 8 characters long" class="form-control" name="p" id="p" type="password" onchange="ispassok()" required></input> 
+			</div>
+
+			<div class="form-group">
+			<label for="p2" >Confirm password:</label>  
+			<input placeholder="Confirm password"   class="form-control" name="p2" id="p2" type="password" required></input> 
+			</div>
+
+			<small id="emailHelp" class="form-text text-muted"></small>
+
+			<p class="important">All fields are mandatory</p> 
 	
-			<input type="submit" id="bttn" name="sbmitBttn" value="Submit"></input> <input type="reset" id="rstbttn"></input><br> <br>
+			<input class="btn btn-lg btn-primary" type="submit" id="bttn" name="sbmitBttn" value="Register"></input> 
+			<input class="btn btn-secondary btn-lg" type="reset" id="rstbttn" value="Reset"></input>
 		
 	</form>
+</div>
+</div>
+
+
 			<p id="mailvalidation"></p>
 			<p id="passvalidation"></p>
 

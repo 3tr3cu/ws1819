@@ -63,7 +63,7 @@ if (login()){
       <a class="nav-item nav-link" href="credits.php">Credits</a>
 	  <?php if(login()){
 			if($_SESSION['type']==1){
-			echo '<a class="nav-item nav-link" href="handlingQuizesAJAX.php">Manage Qustions</a>';
+			echo '<a class="nav-item nav-link" href="handlingQuizesAJAX.php">Manage Quizzes</a>';
 			} else if ($_SESSION['type']==2){
 			echo '<a class="nav-item nav-link" href="handlingAccounts.php">Manage Accounts</a>';
 			}
